@@ -1,0 +1,37 @@
+.DS_Store
+Thumbs.db
+
+# Python/cache artifacts
+__pycache__/
+*.py[cod]
+*.egg-info/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# Local environments and secrets
+.env
+.env.*
+.venv/
+venv/
+
+# Large experiment artifacts not intended for the public paper repo
+data/
+datasets/
+checkpoints/
+weights/
+models/
+runs/
+outputs/
+wandb/
+logs/
+*.ckpt
+*.pt
+*.pth
+*.onnx
+*.h5
+*.nii
+*.nii.gz
+*.nrrd
+*.mha
+*.mhd
