@@ -1,35 +1,51 @@
 # PANTHER Task 1 Pancreatic Tumor Segmentation on Diagnostic MRI
 
 ## Challenge and Evaluation
-PANTHER Task 1 is binary pancreatic tumor segmentation on diagnostic MRI. The submission contains one 3D tumor mask per case. Official evaluation reports DSC and surface/volume error metrics such as MSD, HD95, MASD, and RMSE; DSC is higher-better, while distance and error metrics are lower-better.
+PANTHER Task 1 is a 3D binary segmentation task for pancreatic tumor delineation on contrast-enhanced diagnostic MRI. The input is one volumetric MRI scan per case, and the output is a binary tumor mask in the same image geometry.
+
+The target is tumor only: label value 1 is foreground, while all other labels, including pancreas or contextual label values, are treated as background. The primary validation metric is Dice, where higher is better. The challenge scoring setup also reports surface and volume-error metrics such as surface Dice, HD95, MASD, and tumor-burden RMSE, where lower distance and error values are better.
 
 ## Final Solution
 ### Method Overview
-The final solution is a five-fold 3D transformer segmentation ensemble for diagnostic MRI. Each model predicts a pancreatic tumor probability map from a cropped 3D MRI region, and the final mask is obtained by averaging the five fold predictions. This ensemble design reduces dependence on any single training split and makes the binary tumor output more stable.
+The final solution is a five-fold 3D residual encoder segmentation ensemble. Each fold model predicts a pancreatic tumor probability map from the full MRI volume using patch-based 3D inference. The final submitted masks are produced from the combined fold predictions, which improves stability for the very sparse tumor foreground compared with relying on one split-specific model.
 
 ### Model Architecture
-The network is a compact 3D SegFormer-style model. A transformer encoder captures long-range 3D context around the pancreas, while a lightweight decoder converts the encoded features into a voxelwise tumor probability map. Training uses a Dice plus cross-entropy segmentation objective with an auxiliary loss to help intermediate features learn tumor localization. The model sees 3D patches centered near foreground regions, with random offsets so that it learns both tumor appearance and surrounding anatomy.
+The network is an nnU-Net-style 3D residual DynUNet. It uses a single MRI intensity channel as input and outputs one sigmoid tumor probability channel. The encoder-decoder has residual convolutional blocks, instance normalization, skip connections, and progressively wider feature maps from 16 to 320 channels. Kernel and stride choices follow the anisotropic target spacing so that the model preserves through-plane context while still downsampling efficiently in the in-plane dimensions.
+
+The model is trained only on the binary tumor target. The pancreas/context label is mapped to background before training so that the network does not learn to segment non-tumor anatomy as foreground.
 
 ### Training Strategy
-Training is organized as a gradual refinement schedule. The first stage learns the main tumor-localization behavior with learning rate 3e-4 for 1,200 steps. The second stage continues from the best first-stage model for 800 steps at learning rate 1e-4. The third stage performs a final 600-step refinement at learning rate 5e-5. Each stage uses a short warmup period to avoid unstable early updates.
+Training uses five locked patient-level folds. Each fold is trained for 200 epochs with mixed precision, batch size 1, AdamW optimization, learning rate 2e-4, weight decay 1e-5, and cosine learning-rate decay. The loss combines Dice loss with binary cross-entropy, with Dice as the dominant term.
 
-Optimization uses AdamW, weight decay 5e-5, gradient clipping at 1.0, and batch size 1. Five models are trained on different cross-validation folds and are kept as equal contributors to the final ensemble.
+Because tumors occupy a very small fraction of each 3D volume, training samples foreground-biased 64 x 192 x 192 patches. Positive sampling is much stronger than negative sampling so that each epoch repeatedly exposes the model to tumor voxels. Augmentation includes random flips along all three spatial axes, mild affine transforms, intensity scaling and shifting, and small Gaussian noise.
 
 ### Inference Strategy
-At inference time, MRI intensities are normalized with a foreground-based z-score rule. The model is applied with overlapping sliding windows so that full 3D cases can be predicted despite memory limits. Flip test-time augmentation is used along the three spatial axes, and the augmented probability maps are averaged before thresholding. Each fold produces a tumor probability map, and voxels above 0.5 are considered tumor for that fold.
+Inference applies the same foreground-based intensity normalization as training. Full 3D cases are processed with overlapping sliding windows of 64 x 192 x 192 voxels and 50% overlap. Test-time augmentation averages predictions from the original image and spatially flipped variants. For each fold, the selected checkpoint is combined with a compatible late checkpoint as a small snapshot ensemble when available.
+
+Fold-specific thresholds are selected from validation behavior rather than using a fixed 0.5 cutoff. This lower-threshold strategy is appropriate for the sparse tumor target, where an overly conservative threshold can erase small lesions.
 
 ### Post-processing
-Each fold prediction is cleaned by keeping the largest connected tumor component, which removes isolated false-positive islands. The five cleaned probability maps are then averaged uniformly, and the final binary tumor mask is exported from the ensemble average.
+The binary mask is cleaned by retaining the largest connected tumor component and removing components smaller than 8 voxels. The cleaned fold predictions are then combined across the five folds for the final test masks, preserving the original image geometry and metadata in the exported MHA files.
 
 ## Internal Validation
-Internal records confirm that all five folds were trained and used in the final ensemble, with prediction statistics available for the fold outputs and the final averaged masks. A standalone numeric cross-validation summary was not preserved for this final submission.
+The final five-fold validation result was complete and passed consistency review. The mean Dice score was `0.46427633874838337`, with fold scores:
+
+- Fold 0: `0.5746719638258919`
+- Fold 1: `0.4917325831227954`
+- Fold 2: `0.2854393877457833`
+- Fold 3: `0.5238617509827004`
+- Fold 4: `0.4456760080647459`
+
+The fold standard deviation was `0.0988130437624323`. All five fold submissions were present, tied to the locked five-fold split, and generated by the same residual encoder segmentation pipeline. The final exported test submission contained 19 case masks and passed schema and file-completeness validation.
 
 ## Official Test Result
+The final package passed submission validation and was evaluated as one valid test submission.
+
 - Leaderboard score / mean position: `9.4`
 - Medal: none
-- DSC: `0.40832`
-- MSD: `0.57393`
-- HD95: `26.21856`
-- MASD: `16.78252`
-- RMSE: `18926.57507`
+- DSC: `0.42355`
+- MSD: `0.55589`
+- HD95: `34.62509`
+- MASD: `24.31996`
+- RMSE: `17228.61379`
 - Percentile: `0.16`

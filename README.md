@@ -44,7 +44,7 @@ The challenge benchmark used in this project comes from [ReX-MLE](https://github
 | ISLES'22 | Segmentation | Dice | 0.71 | [solution](solutions/isles22/) |
 | LDCT-IQA | Image quality assessment | Score | 2.74 | [solution](solutions/ldct-iqa/) |
 | NeurIPS-CellSeg | Segmentation | F1 | 0.90 | [solution](solutions/neurips-cellseg/) |
-| PANTHER-T1 | Segmentation | Dice | 0.41 | [solution](solutions/panther-task1/) |
+| PANTHER-T1 | Segmentation | Dice | 0.42 | [solution](solutions/panther-task1/) |
 | PANTHER-T2 | Segmentation | Dice | 0.31 | [solution](solutions/panther-task2/) |
 | PUMA-T1-Seg | Tissue segmentation | Dice | 0.56 | [solution](solutions/puma-track1-task1/) |
 | PUMA-T1-Det | Nuclei detection | F1 | 0.54 | [solution](solutions/puma-track1-task2/) |
