@@ -3,19 +3,18 @@
   <img src="assets/logo.png" alt="AMID logo" width="180">
 </p>
 
-# AMID: Towards Autonomous Medical Imaging Model Development
-
+# AMID: Towards Autonomous and Auditable Medical Imaging Model Development
 <!-- <p align="center">
   Shengyuan Liu<sup>1,*</sup>, Jia-Xuan Jiang<sup>1,*</sup>, Boyun Zheng<sup>1</sup>, Cheng Wang<sup>1</sup>, Wentao Pan<sup>1</sup>, Zipei Wang<sup>2</sup>, Houwen Peng<sup>5</sup>, Yu Gu<sup>3</sup>, Lichao Sun<sup>4,&dagger;</sup>, Yixuan Yuan<sup>1,&dagger;</sup>
 </p> -->
 
-<!-- <p align="center">
+<p align="center">
   <sup>1</sup>The Chinese University of Hong Kong &nbsp;
   <sup>2</sup>Institute of Automation, Chinese Academy of Sciences &nbsp;
   <sup>3</sup>Microsoft Research &nbsp;
   <sup>4</sup>Lehigh University &nbsp;
   <sup>5</sup>Independent Researcher
-</p> -->
+</p>
 
 <!-- <p align="center">
   <sup>*</sup>Equal contribution &nbsp; <sup>&dagger;</sup>Corresponding author
@@ -27,7 +26,9 @@ AMID is an autonomous multi-agent framework for medical imaging model developmen
 
 ![AMID system overview](assets/amid-system-overview.png)
 
-AMID first profiles the task contract, modality, geometry, labels, metric, risks, and submission format. It then constructs executable method lanes grounded in medical-imaging resources and coordinates coding-agent workers through shared artifacts, validation evidence, checkpoints, notes, and reviewer reports. Final submissions are selected only after verification checks for validation protocol, metric computation, output schema, artifact completeness, and traceability.
+AMID addresses a practical medical imaging model-development problem. The input is intentionally minimal: a medical-imaging dataset and a task definition that specifies the target output, evaluation metric, and, when applicable, the submission protocol. The dataset may contain 2D images, 3D volumes, pathology tiles, paired enhancement data, detection annotations, segmentation masks, class labels, graph labels, or image-quality scores. 
+
+The task definition may come from a clinical modeling request or from a challenge description. The expected output is not a single text answer or a suggested architecture, but a complete model package: executable training and inference code, model weights or checkpoints, prediction files, validation scores, final submission artifacts when required, and an audit trail showing that the result was produced under the correct data, metric, split, and submission contract.
 
 ## ✨ Todo List
 - [ ] Release the AMID source code.
@@ -37,6 +38,8 @@ AMID first profiles the task contract, modality, geometry, labels, metric, risks
 ## 📦Evaluation
 
 The challenge benchmark used in this project comes from [ReX-MLE](https://github.com/rajpurkarlab/ReX-MLE), which including 20 medical-imaging challenge tasks.
+
+We open-sourced the challenge-specific solution reports for all 20 ReX-MLE medical-imaging tasks. The table below summarizes the task type, primary metric, AMID score, and solution report link for each challenge.
 
 | Challenge | Task Type | Primary Metric | AMID Score | Report |
 |---|---|---:|---:|---|
@@ -61,5 +64,23 @@ The challenge benchmark used in this project comes from [ReX-MLE](https://github
 | TopCoW-MRA-Cls | MRA graph classification | Accuracy | 0.46 | [solution](solutions/topcow-track2-task3/) |
 | USenhance | Ultrasound enhancement | LNCC | 0.19 | [solution](solutions/usenhance/) |
 
+We will continue to update the AMID system and open-source the system code and solution reports for more medical-imaging tasks in the future.
 
 ## 📝Citation
+If you are interested in our work, please feel free to contact us via email: 
+- liushengyuan@link.cuhk.edu.hk
+- yxyuan@ee.cuhk.edu.hk
+
+The bibtex of our paper is as follows:
+
+```
+@misc{liu2026autonomousauditablemedicalimaging,
+      title={Towards Autonomous and Auditable Medical Imaging Model Development}, 
+      author={Shengyuan Liu and Jia-Xuan Jiang and Boyun Zheng and Cheng Wang and Zipei Wang and Wentao Pan and Hongtao Wu and Houwen Peng and Yu Gu and Lichao Sun and Yixuan Yuan},
+      year={2026},
+      eprint={2607.10522},
+      archivePrefix={arXiv},
+      primaryClass={cs.CV},
+      url={https://arxiv.org/abs/2607.10522}, 
+}
+```
