@@ -9,12 +9,18 @@
 </p> -->
 
 <p align="center">
+  <a href="https://arxiv.org/pdf/2607.10522"><img src="https://img.shields.io/badge/arXiv-2607.10522-b31b1b.svg?style=flat-square" alt="arXiv"></a>
+  <a href="README_CN.md"><img src="https://img.shields.io/badge/Language-%E4%B8%AD%E6%96%87-blue?style=flat-square" alt="中文 README"></a>
+</p>
+
+
+<!-- <p align="center">
   <sup>1</sup>The Chinese University of Hong Kong &nbsp;
   <sup>2</sup>Institute of Automation, Chinese Academy of Sciences &nbsp;
   <sup>3</sup>Microsoft Research &nbsp;
   <sup>4</sup>Lehigh University &nbsp;
   <sup>5</sup>Independent Researcher
-</p>
+</p> -->
 
 <!-- <p align="center">
   <sup>*</sup>Equal contribution &nbsp; <sup>&dagger;</sup>Corresponding author
