@@ -70,7 +70,7 @@ We open-sourced the challenge-specific solution reports for all 20 ReX-MLE medic
 | TopCoW-MRA-Cls | MRA graph classification | Accuracy | 0.46 | [solution](solutions/topcow-track2-task3/) |
 | USenhance | Ultrasound enhancement | LNCC | 0.19 | [solution](solutions/usenhance/) |
 
-We will continue to update the AMID system and open-source the system code and solution reports for more medical-imaging tasks in the future.
+**ToDo: We will continue to update the AMID system and open-source the system code and solution reports for more medical-imaging tasks in the future.**
 
 ## 📝Citation
 If you are interested in our work, please feel free to contact us via email: 
