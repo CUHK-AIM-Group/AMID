@@ -26,6 +26,11 @@
   <sup>*</sup>Equal contribution &nbsp; <sup>&dagger;</sup>Corresponding author
 </p> -->
 
+## News
+- **[09/26]** Our AMID system ranked **3rd among 40+ Teams** in [MICCAI 2026 ISLES Challenge](https://isles-26.grand-challenge.org/)!
+- **[08/26]** AMID performed **1st** in [PUMA post-challenge Track 2 Nuclei Segmentation Task](https://puma.grand-challenge.org/evaluation/track-2-final-test-phase/leaderboard/).
+
+
 ## 🚀Overview
 
 AMID is an autonomous multi-agent framework for medical imaging model development. Given a task definition and dataset, AMID builds task-specific model solutions through data-conditioned method planning, multi-agent optimization, and verification-guided final artifact selection.
@@ -35,10 +40,6 @@ AMID is an autonomous multi-agent framework for medical imaging model developmen
 AMID addresses a practical medical imaging model-development problem. The input is intentionally minimal: a medical-imaging dataset and a task definition that specifies the target output, evaluation metric, and, when applicable, the submission protocol. The dataset may contain 2D images, 3D volumes, pathology tiles, paired enhancement data, detection annotations, segmentation masks, class labels, graph labels, or image-quality scores. 
 
 The task definition may come from a clinical modeling request or from a challenge description. The expected output is not a single text answer or a suggested architecture, but a complete model package: executable training and inference code, model weights or checkpoints, prediction files, validation scores, final submission artifacts when required, and an audit trail showing that the result was produced under the correct data, metric, split, and submission contract.
-
-## News
-- **[09/26]** Our AMID system ranked **3rd among 40+ Teams** in [MICCAI 2026 ISLES Challenge](https://isles-26.grand-challenge.org/)!
-- **[08/26]** AMID performed 1st in [PUMA post-challenge Track 2 Nuclei Segmentation Task](https://puma.grand-challenge.org/evaluation/track-2-final-test-phase/leaderboard/).
 
 ## ✨ Todo List
 - [ ] Release the AMID source code.
