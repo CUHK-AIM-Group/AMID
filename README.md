@@ -36,6 +36,9 @@ AMID addresses a practical medical imaging model-development problem. The input 
 
 The task definition may come from a clinical modeling request or from a challenge description. The expected output is not a single text answer or a suggested architecture, but a complete model package: executable training and inference code, model weights or checkpoints, prediction files, validation scores, final submission artifacts when required, and an audit trail showing that the result was produced under the correct data, metric, split, and submission contract.
 
+## News
+- Our AMID system ranked **3rd among 40+ Teams** in the [MICCAI 2026 ISLES Challenge](https://isles-26.grand-challenge.org/)!
+
 ## ✨ Todo List
 - [ ] Release the AMID source code.
 - [x] Release the AMID technical report.
